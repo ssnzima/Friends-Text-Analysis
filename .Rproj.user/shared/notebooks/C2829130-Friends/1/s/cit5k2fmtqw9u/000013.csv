@@ -1,0 +1,20 @@
+"0","install.packages(""hrbrthemes"")
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.5/hrbrthemes_0.9.3.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1280020 bytes (1.2 MB)
+"
+"2","downloaded 1.2 MB
+
+"
+"1","package ‘hrbrthemes’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","The downloaded binary packages are in
+	C:\Users\Sihlelelwe Nzima\AppData\Local\Temp\RtmpMbtWB5\downloaded_packages"
+"1",""
+"1","
+"
