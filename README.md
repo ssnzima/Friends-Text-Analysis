@@ -1,30 +1,45 @@
----
-title: "Friends"
-author: "Sihlelelwe Nzima"
-date: "2026-05-14"
-output: html_document
----
+Friends
+================
+Sihlelelwe Nzima
+2026-05-14
 
-The purpose of this fun project is to display the data analytics behind the show lines of the American sit-com "Friends".
+# Purpose
 
-Data description: 
-Lines spoken matched to the season, episode, scene, and tone in which they're spoken by the various characters in the show (699 total major & minor characters). 
-Dataset contains 4 dataframes: friends, friends_emotions (emotion), friends_entities, friends_info (show production details)
+The purpose of this fun project is to display the data analytics behind
+the show lines of the American sit-com “Friends”.
 
-```{r}
-library(tidyverse)
-library(ggthemes)
-library(cowplot)
-install.packages("hrbrthemes")
-library(hrbrthemes)
+Data description: Lines spoken matched to the season, episode, scene,
+and tone in which they’re spoken by the various characters in the show
+(699 total major & minor characters). Dataset contains 4 dataframes:
+friends, friends_emotions (emotion), friends_entities, friends_info
+(show production details)
+
+# Data
+
+``` r
 pacman::p_load(friends, scales) #loading lines from the show
-
 print(friends_info)
-friends %>% pull(speaker) %>%  unique
 ```
 
-```{r VISUALISATIONS}
+    ## # A tibble: 236 × 8
+    ##    season episode title      directed_by written_by air_date   us_views_millions
+    ##     <int>   <int> <chr>      <chr>       <chr>      <date>                 <dbl>
+    ##  1      1       1 The Pilot  James Burr… David Cra… 1994-09-22              21.5
+    ##  2      1       2 The One w… James Burr… David Cra… 1994-09-29              20.2
+    ##  3      1       3 The One w… James Burr… Jeffrey A… 1994-10-06              19.5
+    ##  4      1       4 The One w… James Burr… Alexa Jun… 1994-10-13              19.7
+    ##  5      1       5 The One w… Pamela Fry… Jeff Gree… 1994-10-20              18.6
+    ##  6      1       6 The One w… Arlene San… Adam Chas… 1994-10-27              18.2
+    ##  7      1       7 The One w… James Burr… Jeffrey A… 1994-11-03              23.5
+    ##  8      1       8 The One W… James Burr… Marta Kau… 1994-11-10              21.1
+    ##  9      1       9 The One W… James Burr… Jeff Gree… 1994-11-17              23.1
+    ## 10      1      10 The One w… Peter Bone… Adam Chas… 1994-12-15              19.9
+    ## # ℹ 226 more rows
+    ## # ℹ 1 more variable: imdb_rating <dbl>
 
+# Visualisations
+
+``` r
 friends_info %>% 
     group_by(season) %>% #average ratings for each season
     summarise(mean_rating = mean(imdb_rating)) %>% 
@@ -35,12 +50,14 @@ friends_info %>%
        title = "Friends Avg. Ratings Per Season") +
     theme_bw()
 ```
-Friends generally performed well with the minimum rating being above 8 (out of 10). The highest average rating occurs in Season 9, while the lowest is at the end of Season 8.
 
-```{r}
-install.packages("ggrepel")
+<img src="README_files/figure-gfm/unnamed-chunk-2-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+Friends generally performed well with the minimum rating being above 8
+(out of 10). The highest average rating occurs in Season 9, while the
+lowest is at the end of Season 8.
+
+``` r
 library(ggrepel)
-
 
 viewership_plot <- friends_info %>%
     mutate(Text = ifelse(imdb_rating == min(imdb_rating, na.rm=T), glue::glue("Lowest: S{season}, ep{episode} ({imdb_rating})\n{title}"), 
@@ -49,7 +66,7 @@ viewership_plot <- friends_info %>%
     mutate(season = as.character(season)) #ensures season (numbers) are viewed as categorical insteady of continuous numbers
 
 
-viewership_plot$season <- factor(df_plot$season, levels = as.character(1:10)) #forces consecutive ordering of seasons
+viewership_plot$season <- factor(viewership_plot$season, levels = as.character(1:10)) #forces consecutive ordering of seasons
 
 viewership_plot %>% 
   ggplot() + 
@@ -64,6 +81,10 @@ viewership_plot %>%
   scale_fill_hue(l=40, c=35) + 
   scale_color_hue(l=40, c=35) + 
   guides(fill = F, color = F)
-
 ```
-More descriptive visualisation of average ratings. Joint highest ratings at 9.7 are from episodes 17, 18, and 14 from seasons 10 and 5 respectively. Conversely, the lowest ratings, 7.2, are found in episode 21, season 4. 
+
+<img src="README_files/figure-gfm/unnamed-chunk-3-1.png" alt="" width="100%" style="display: block; margin: auto;" />
+More descriptive visualisation of average ratings. Joint highest ratings
+at 9.7 are from episodes 17, 18, and 14 from seasons 10 and 5
+respectively. Conversely, the lowest ratings, 7.2, are found in episode
+21, season 4.
