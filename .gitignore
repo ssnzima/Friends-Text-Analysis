@@ -1,0 +1,14 @@
+# RStudio project files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# R Markdown outputs you don’t want to track
+*.html
+*.Rmd~
+Friends.md
+README.rmd
+
+# OS files
+.DS_Store
